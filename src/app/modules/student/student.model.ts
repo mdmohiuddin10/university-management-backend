@@ -1,6 +1,5 @@
 import { Schema, model } from 'mongoose';
 import { StudentModel, TGourdian, TLocalGuardian, TStudent, TUserName } from './student.interface';
-import bcrypt from 'bcrypt'
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -66,7 +65,6 @@ const studentSchema = new Schema<TStudent, StudentModel>({
         unique: true,
         ref: "User"
     },
-    password: { type: String, required: true, maxlength:[20, "password can not be more than 20 chart"]},
     name: {
         type: userNameSchema,
         required: [true, "Name is required"],
@@ -147,24 +145,6 @@ studentSchema.virtual("fullName").get(function(){
 
 
 
-
-  //   mangoose middleware/pre save middleware or hooks: wiil work on create() save()
-  studentSchema.pre("save", async function(next){
-    // console.log(this, "pre hook : we will save the data");
-    // hashing password and save into DB
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const user = this; //doc
-    // Store hash in your password DB.
-    user.password = await bcrypt.hash(user.password, Number(process.env.BCRYPT_SALT_ROUNDS))
-    next()   
-  })
-
-//   post save middleware/hooks
-studentSchema.post("save", function(doc, next){
-    doc.password = " "
-    // console.log(this, "post hook : we save the data");
-    next()
-})
 
 
 // qurey middlewaqre 
