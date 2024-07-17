@@ -9,3 +9,10 @@ export type TUser = {
 }
 
 
+// export type NewUser =  {
+//     role: string;
+//     password: string;
+//     id: string
+// }
+
+

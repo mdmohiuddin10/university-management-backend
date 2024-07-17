@@ -60,6 +60,12 @@ const localGuardianSchema = new Schema<TLocalGuardian>({
 
 const studentSchema = new Schema<TStudent, StudentModel>({
     id: { type: String, required: true, unique: true},
+    user:  {
+        type: Schema.Types.ObjectId,
+        required: [true, "Uer ID must be required"],
+        unique: true,
+        ref: "User"
+    },
     password: { type: String, required: true, maxlength:[20, "password can not be more than 20 chart"]},
     name: {
         type: userNameSchema,
@@ -116,11 +122,11 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     profileImg : {
         type : String,
     },
-    isActive :{
-        type: String,
-        enum:  ["active", "blocked"],
-        default: "active"
-    },
+    // isActive :{
+    //     type: String,
+    //     enum:  ["active", "blocked"],
+    //     default: "active"
+    // },
     isDeleted : {
         type: Boolean,
         default : false

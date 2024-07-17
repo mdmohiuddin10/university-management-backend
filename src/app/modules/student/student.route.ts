@@ -5,7 +5,7 @@ const router = express.Router()
 
 
 // will call controller
-router.post("/create-student", StudentControllers.createStudent)
+// router.post("/create-student", StudentControllers.createStudent)
 
 router.get("/", StudentControllers.getAllStudents)
 
