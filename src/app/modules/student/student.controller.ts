@@ -1,19 +1,14 @@
-import { NextFunction, Request, RequestHandler, Response } from "express";
+// import { NextFunction, Request, RequestHandler, Response } from "express";
 import { StudentServices } from "./student.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
+import catchAsync from "../../utils/catchAsync";
 // import studentValidationSchema from "./student.validation";
 // import studentValidationSchema from "./student.validation";
 
-// higher order function to avoid repeat code
-const catchAsync = (fn: RequestHandler) => {
 
-    return (req: Request, res: Response, next: NextFunction) =>{
-    Promise.resolve(fn(req, res, next)).catch(err => next(err))
-    }
-}
 
-const getAllStudents = catchAsync(async(req, res, next) =>{
+const getAllStudents = catchAsync(async(req, res ) =>{
 
         const result = await StudentServices.getAllStudentsFromDB()
         // res.status(200).json({
@@ -30,7 +25,7 @@ const getAllStudents = catchAsync(async(req, res, next) =>{
     })
 
 
-const getSingleStudent = catchAsync(async(req, res, next) =>{
+const getSingleStudent = catchAsync(async(req, res) =>{
    
     const { studentId } = req.params
     const studentResult = await StudentServices.getSingleStudentFromDB(studentId);
@@ -45,7 +40,7 @@ const getSingleStudent = catchAsync(async(req, res, next) =>{
 
 
 
-const deleteStudent = catchAsync(async(req, res, next) =>{
+const deleteStudent = catchAsync(async(req, res) =>{
     const { studentId } = req.params
     const studentResult = await StudentServices.deleteStudentFromDB(studentId);
 
